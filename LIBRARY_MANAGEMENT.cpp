@@ -78,7 +78,7 @@ class librarian
         void search(string);
         void sortindex();
         string extractnid(string);
-       
+        void addstudent();
         /* index list */
   void index_create();
   string nid_extract(string);
@@ -568,6 +568,35 @@ cout << "\nID\n";
      
  }
  
+
+
+ void librarian::addstudent()
+ {
+    string buffer,sname,susn,bname,date_of_issue;
+    int pos;
+    fstream fp;
+
+cout << "\nStudent usn :\n";
+    cin >> sname;
+    cout << "\nstudent name :\n";
+    cin >> susn;
+    cout << "\nBook name :\n";
+    cin >> bname;
+    cout << "\n date of issue :\n";
+    cin >> date_of_issue;
+    buffer.erase();
+    buffer=sname+"|"+susn+"|"+bname+"|"+date_of_issue+"$\n";
+    fp.open("bookissue.txt",ios::out|ios::app);  
+    pos=fp.tellp();
+    fp<<buffer;
+    fp.close();
+  
+    cout<<"\nBook issued Successfully....\n";
+     
+ }
+
+
+
  string librarian::extractnid(string buffer)
  {
      string lid;
@@ -921,7 +950,7 @@ cout<<"Book name:"<<bname<<" Author name"<<bauthor<<"Publisher name"<<pname<<end
     while(1)
     {
             int sch,nch,rch;
-            string username="a",password="j",u,p;
+            string username="admin",password="admin",u,p;
             cout<<"\n\t******* LIBRARY MANAGEMENT USING PRIMARY INDEX *******\n";
             cout<<"\n\t\tEnter \n\t\t1. Admin\n\t\t2. Student\n\t\t3. librarian\n\t\t0. Exit\n";
             cout<<"\nEnter your choice\n";
@@ -1099,7 +1128,7 @@ cout<<"Book name:"<<bname<<" Author name"<<bauthor<<"Publisher name"<<pname<<end
         cout<<"----------------------\n";
   cout<<"|   LIBRARIAN SECTION     |\n";
   cout<<"----------------------\n";
-                     cout<<"1. Search student Record\n2. Display student Record\nEnter your choice\n\n\t\t\t(0) <<-- BACK\n";
+                     cout<<"1. Search student Record\n 2.Display student Record\n3. Book  issued \n 4.Display issued book\nEnter your choice\n\n\t\t\t(0) <<-- BACK\n";
                      cout<<"------------------------\n";
                      cin>>nch;
                      switch(nch)
@@ -1110,8 +1139,11 @@ cout<<"Book name:"<<bname<<" Author name"<<bauthor<<"Publisher name"<<pname<<end
                                s.search(key);
                                break;
 
+                 case 3:l.addstudent();break;
+             
                 case 2: s.display_student();
                         break;
+                case 4: system("cat bookissue.txt");break;
                 case 0: goto mainpage;
                 default: cout<<"Invalid choice";
                       }
